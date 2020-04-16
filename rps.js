@@ -1,5 +1,7 @@
 const buttons = document.querySelectorAll('button');
 const results = document.getElementById('results');
+const score = document.getElementById('scoreboard');
+const final = document.getElementById('finalscore');
 
 buttons.forEach((button) => {
     button.addEventListener('click', playGame);
@@ -15,6 +17,7 @@ function computerChoice() {
 function playGame() {
     let computerSelection = computerChoice()
     let playerChoice = this.value;
+    let status;
 
     if (playerChoice == computerSelection) {
         results.textContent = 'Draw! You both chose ' + playerChoice;
@@ -23,32 +26,35 @@ function playGame() {
                 (playerChoice=='scissors' && computerSelection== 'paper')) 
                 {
         results.textContent = ('You win! ' + playerChoice + ' beats ' + computerSelection);
-        return 'won';
-    } else {
-        results.textContent = ('You lose! ' + computerSelection + ' beats ' + playerChoice);
-        return 'lost';
-    }   
-}
-
-
-function game(rounds) {
-    playerScore = 0;
-    computerScore = 0;
-    for (let i = 0; i < rounds; i++) {
-        (playGame() == 'won') 
-                ? playerScore += 1 : computerScore += 1;
-    }
-
-    if (playerScore == computerScore) {
-        status = 'draw';
-    } else if (playerScore > computerScore) {
         status = 'won';
     } else {
+        results.textContent = ('You lose! ' + computerSelection + ' beats ' + playerChoice);
         status = 'lost';
     }
-
-    console.log(`The score is ${playerScore}:${computerScore}, you have ${status}`)
+    updateScore(status);   
+    checkWin();
 }
 
+
+let playerScore = 0;
+let computerScore = 0;
+function updateScore(status) {
+    console.log(status);
+    if (status=='won') {
+        playerScore += 1
+     } else if (status=='lost') {
+        computerScore += 1;
+     } 
+    score.textContent = `Your score: ${playerScore}\tComputer score: ${computerScore}`;
+    
+}
+
+function checkWin() {
+    if (playerScore > 4) {
+        final.textContent = 'Player has won!';
+    } else if (computerScore > 4) {
+        final.textContent = 'Computer has won!';
+    } 
+}
 
 
