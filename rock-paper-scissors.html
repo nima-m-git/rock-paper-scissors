@@ -1,3 +1,89 @@
+<!DOCTYPE html>
+<html>
+<header>
+    <h1>Rock Paper Scissors</h1>
+</header>
+
+<body>
+    <label for='selection'>Choose a move:</label>
+
+    <select id='selection'>
+        <option value='rock'>Rock</option>
+        <option value='paper'>Paper</option>
+        <option value="scissors">Scissors</option>
+    </select>
+    <button type='submit' id='selection'>Submit</button>
+    
+
+</body>
+
+
 <script>
+    function computerPlay() {
+        let options = ['rock', 'paper', 'scissors']
+        return options[Math.floor(Math.random() * options.length)];
+    }
+
+    const choose = 'Choose: rock, paper, or scissors.'
+    
+
+    function playGame() {
+        let player = prompt(choose).toLowerCase();
+        let computerSelection = computerPlay();
+
+        if (player == computerSelection) {
+            return 'Draw! You both chose ' + player;
+        } else if ((player=='rock' && computerSelection=='scissors') ||
+                    (player=='paper' && computerSelection=='rock') ||
+                    (player=='scissors' && computerSelection== 'paper')) 
+                    {
+            console.log('You win! ' + player + ' beats ' + computerSelection);
+            return 'won';
+        } else {
+            console.log('You lose! ' + computerSelection + ' beats ' + player);
+            return 'lost';
+        }   
+    }
+
+    function game(rounds) {
+        playerScore = 0;
+        computerScore = 0;
+        for (let i = 0; i < rounds; i++) {
+            (playGame() == 'won') 
+                    ? playerScore += 1 : computerScore += 1;
+        }
+
+        if (playerScore == computerScore) {
+            status = 'draw';
+        } else if (playerScore > computerScore) {
+            status = 'won';
+        } else {
+            status = 'lost';
+        }
+
+        console.log(`The score is ${playerScore}:${computerScore}, you have ${status}`)
+    }
+
+    let output = document.querySelector('.output');
+
+
+    let i = 10;
+    while (i >= 0) {
+        const para = document.createElement('p');
+        if (i == 10) {
+            para.textContent = 'Countdown 10';
+        } else if (i == 0) {
+            para.textContent = 'Blast off!';
+        } else {
+            para.textContent = i;
+        }
+        output.appendChild(para);
+    }
+
+    const btn = document.querySelector('#selection');
+    btn.addEventListener('click', playGame);
 
 </script>
+
+</html>
+
